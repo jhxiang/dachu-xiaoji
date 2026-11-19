@@ -1,0 +1,57 @@
+name: Build iOS IPA (大厨小记)
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-ipa:
+    runs-on: macos-15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync WebApp assets into iOS bundle
+        run: |
+          rm -rf ios/DachuXiaoji/WebApp
+          mkdir -p ios/DachuXiaoji/WebApp
+          cp index.html styles.css app.js recipes-catalog.js manifest.webmanifest icon-180.png icon-192.png icon-512.png ios/DachuXiaoji/WebApp/
+          ls -lh ios/DachuXiaoji/WebApp/
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: ios
+        run: xcodegen generate
+
+      - name: Build unsigned iOS Release .app (arm64)
+        working-directory: ios
+        run: |
+          xcodebuild \
+            -project DachuXiaoji.xcodeproj \
+            -scheme DachuXiaoji \
+            -configuration Release \
+            -sdk iphoneos \
+            -arch arm64 \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            clean build
+
+      - name: Package DachuXiaoji.ipa
+        run: |
+          mkdir -p dist/Payload
+          cp -R ios/build/Build/Products/Release-iphoneos/DachuXiaoji.app dist/Payload/
+          cd dist
+          zip -qry DachuXiaoji.ipa Payload
+          ls -lh DachuXiaoji.ipa
+
+      - name: Upload DachuXiaoji.ipa artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DachuXiaoji-iOS-IPA
+          path: dist/DachuXiaoji.ipa
+          retention-days: 90

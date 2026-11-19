@@ -1,0 +1,26 @@
+{
+  "name": "大厨小记",
+  "short_name": "大厨小记",
+  "description": "简约清爽的家庭做菜记录本：记录菜品照片、制作次数、食材清单、做法心得与做菜日历",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF7F2",
+  "theme_color": "#FAF7F2",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
