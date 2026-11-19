@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6faf7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="我的菜品">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>我的菜品</title>
+<style>
+:root{--bg:#f5f8f5;--card:#fff;--ink:#20352a;--muted:#7d8d82;--green:#4e9a70;--pale:#e8f3eb;--line:#e7eee8;--shadow:0 8px 24px #244b3210}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;padding-bottom:calc(26px + env(safe-area-inset-bottom))}
+header{padding:calc(20px + env(safe-area-inset-top)) 18px 16px;background:linear-gradient(145deg,#edf6ef,#f8fbf8)}
+.top{display:flex;justify-content:space-between;align-items:center}.eyebrow{font-size:12px;color:var(--green);font-weight:700;letter-spacing:1px}.title{font-size:27px;font-weight:800;margin:6px 0}.sub{color:var(--muted);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:18px}.stat{background:#ffffffc9;border:1px solid #fff;border-radius:15px;padding:12px 9px}.stat b{font-size:21px;display:block}.stat span{font-size:11px;color:var(--muted)}
+main{padding:16px 16px 0}.navsearch{position:sticky;top:0;z-index:5;background:var(--bg);padding:4px 0 12px}.navsearch .search{width:100%;border-radius:14px;padding:13px 15px 13px 42px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%237d8d82' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-4-4'/%3E%3C/svg%3E") no-repeat 14px center}.toolbar{display:flex;gap:9px;margin-bottom:15px}.search{flex:1;min-width:0;border:1px solid var(--line);background:white;border-radius:12px;padding:12px 13px;font-size:14px;outline:none}.btn{border:0;border-radius:12px;background:var(--green);color:white;padding:0 15px;font-weight:700;font-size:14px}.btn.secondary{background:var(--pale);color:var(--green);padding:11px 13px}
+.filters{display:flex;gap:8px;overflow:auto;padding-bottom:10px}.categories{display:flex;gap:7px;overflow:auto;padding:0 0 14px}.category-chip{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:18px;padding:7px 11px;color:var(--muted);font-size:12px}.category-chip.active{background:#e8f3eb;border-color:#cfe5d5;color:#367c54;font-weight:700}.tag{display:inline-block;margin-top:6px;padding:3px 8px;border-radius:10px;background:#f0f6f1;color:#528365;font-size:10px}.chip{white-space:nowrap;border:1px solid var(--line);background:white;border-radius:20px;padding:7px 12px;color:var(--muted);font-size:12px}.chip.active{background:var(--pale);border-color:#cfe5d5;color:#367c54;font-weight:700}
+.section{display:flex;justify-content:space-between;align-items:center;margin:3px 1px 12px}.section h2{font-size:17px;margin:0}.section small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.dish{background:var(--card);border-radius:17px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #edf2ed;min-width:0}.photo{width:100%;aspect-ratio:1.25;object-fit:cover;background:#e9f0ea;display:block}.placeholder{aspect-ratio:1.25;display:grid;place-items:center;background:linear-gradient(135deg,#edf5ee,#e2eee5);font-size:34px}.dishbody{padding:11px}.dishname{font-weight:750;font-size:15px;overflow-wrap:anywhere}.meta{font-size:11px;color:var(--muted);margin-top:5px}.dishfoot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;gap:5px}.count{font-size:12px;color:#43865d;font-weight:700}.actions{display:flex;gap:5px}.mini{border:0;border-radius:9px;background:var(--pale);color:#367c54;font-weight:800;padding:7px 9px;font-size:12px}.mini.more{background:#f1f4f1;color:#66766b}
+.empty{background:white;border:1px dashed #cbdacf;border-radius:17px;text-align:center;padding:35px 18px;color:var(--muted);grid-column:1/-1}.empty strong{display:block;color:var(--ink);font-size:16px;margin:8px}
+footer{display:flex;justify-content:center;gap:10px;margin:24px 0 0;flex-wrap:wrap}
+dialog{border:0;border-radius:20px;padding:0;width:min(92vw,430px);box-shadow:0 20px 70px #102a1b40}dialog::backdrop{background:#102a1b66}.modal{padding:20px}.modal h3{margin:0 0 15px;font-size:19px}.field{display:block;margin:12px 0}.field span{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;font:inherit;background:#fbfdfb}.field textarea{min-height:65px;resize:vertical}.preview{width:100%;max-height:190px;object-fit:cover;border-radius:12px;display:none;margin-top:8px}.modalactions{display:flex;gap:9px;margin-top:18px}.modalactions button{height:43px;flex:1}.cancel{border:0;border-radius:12px;background:#eff3ef;color:#607166;font-weight:700}
+.notice{font-size:11px;color:var(--muted);text-align:center;margin:18px 8px}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div><div class="eyebrow">MY HOME COOKING</div><div class="title">我的菜品</div><div class="sub">把每一道亲手做的美味，都好好记录下来。</div></div><div style="font-size:34px">🥬</div></div>
+ <div class="stats">
+  <div class="stat"><b id="dishTotal">0</b><span>收录菜品</span></div>
+  <div class="stat"><b id="cookTotal">0</b><span>累计制作次数</span></div>
+  <div class="stat"><b id="recentTotal">0</b><span>本月制作</span></div>
+ </div>
+</header>
+<main>
+ <div class="navsearch"><input id="search" class="search" placeholder="搜索已收录的菜品名称或备注…"></div>
+ <div class="toolbar"><button class="btn" id="addBtn" style="min-height:42px;width:100%">＋ 添加菜品</button></div>
+ <div class="filters">
+  <button class="chip active" data-sort="recent">最近添加</button><button class="chip" data-sort="count">做得最多</button><button class="chip" data-sort="name">按名称</button>
+ </div>
+ <div class="categories" id="categories"></div>
+ <div class="section"><h2>我的菜品清单</h2><small id="shown"></small></div>
+ <div class="grid" id="grid"></div>
+ <footer><button class="btn secondary" id="exportBtn">导出备份</button><button class="btn secondary" id="importBtn">导入备份</button><input id="backupFile" type="file" accept="application/json" hidden></footer>
+ <div class="notice">数据保存在当前设备的浏览器中。建议定期导出备份；清理浏览器数据可能导致记录丢失。</div>
+</main>
+<dialog id="editor"><form class="modal" id="dishForm">
+ <h3 id="modalTitle">添加一道菜</h3>
+ <label class="field"><span>菜品名称 *</span><input id="dishName" maxlength="50" required placeholder="例如：红烧排骨"></label>
+ <label class="field"><span>菜品分类</span><select id="dishCategory" style="width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;background:#fbfdfb;font:inherit"><option>家常菜</option><option>荤菜</option><option>素菜</option><option>汤羹</option><option>主食</option><option>凉菜</option><option>烘焙甜品</option><option>其他</option></select></label>
+ <label class="field"><span>菜品照片（可选）</span><input id="dishPhoto" type="file" accept="image/*" capture="environment"><img id="preview" class="preview"></label>
+ <label class="field"><span>备注（可选）</span><textarea id="dishNote" maxlength="300" placeholder="口味、做法心得等"></textarea></label>
+ <div class="modalactions"><button type="button" class="cancel" id="cancelBtn">取消</button><button class="btn" type="submit">保存菜品</button></div>
+</form></dialog>
+<dialog id="detail"><div class="modal"><h3 id="detailName"></h3><div id="detailInfo" style="color:var(--muted);font-size:13px;line-height:1.8"></div><div class="modalactions"><button class="cancel" id="detailClose">关闭</button><button class="btn" id="editBtn">编辑</button><button class="btn" style="background:#b65c55" id="deleteBtn">删除</button></div></div></dialog>
+<script>
+const KEY='my-dishes-v1';let dishes=[],sort='recent',editing=null,selected=null,photoData=null,categoryFilter='全部';
+const $=id=>document.getElementById(id);
+function load(){try{dishes=JSON.parse(localStorage.getItem(KEY)||'[]')}catch{dishes=[]}render()}
+function save(){localStorage.setItem(KEY,JSON.stringify(dishes));render()}
+function monthCount(){let m=new Date().toISOString().slice(0,7);return dishes.reduce((n,d)=>n+(d.logs||[]).filter(x=>x.slice(0,7)===m).length,0)}
+function render(){
+ $('dishTotal').textContent=dishes.length;$('cookTotal').textContent=dishes.reduce((n,d)=>n+d.count,0);$('recentTotal').textContent=monthCount();
+ let q=$('search').value.trim().toLowerCase(),arr=dishes.filter(d=>(d.name.toLowerCase().includes(q)||(d.note||'').toLowerCase().includes(q))&&(categoryFilter==='全部'||(d.category||'家常菜')===categoryFilter));
+ arr.sort(sort==='count'?(a,b)=>b.count-a.count:sort==='name'?(a,b)=>a.name.localeCompare(b.name,'zh-CN'):(a,b)=>b.created-a.created);
+ $('shown').textContent=`${arr.length} 道菜`;
+ let cats=['全部','家常菜','荤菜','素菜','汤羹','主食','凉菜','烘焙甜品','其他'];
+ $('categories').innerHTML='';cats.forEach(c=>{let n=c==='全部'?dishes.length:dishes.filter(d=>(d.category||'家常菜')===c).length;if(c!=='全部'&&n===0)return;let b=document.createElement('button');b.className='category-chip'+(categoryFilter===c?' active':'');b.textContent=c+(c==='全部'?'':` ${n}`);b.onclick=()=>{categoryFilter=c;render()};$('categories').append(b)});
+ let grid=$('grid');grid.innerHTML='';
+ if(!arr.length){grid.innerHTML=`<div class="empty"><div style="font-size:36px">🍽️</div><strong>${q?'没有找到这道菜':'还没有收录菜品'}</strong><div>${q?'试试其他关键词':'点击右上角「添加菜品」，开始记录你的拿手菜吧。'}</div></div>`;return}
+ arr.forEach(d=>{let card=document.createElement('article');card.className='dish';let img=d.photo?`<img class="photo" src="${d.photo}" alt="">`:`<div class="placeholder">🍲</div>`;
+ card.innerHTML=`${img}<div class="dishbody"><div class="dishname"></div><span class="tag"></span><div class="meta">最近制作：${d.logs?.length?d.logs[d.logs.length-1]:'尚未记录'}</div><div class="dishfoot"><span class="count">已做 ${d.count} 次</span><div class="actions"><button class="mini" data-act="add">＋1</button><button class="mini more" data-act="detail">详情</button></div></div></div>`;
+ card.querySelector('.dishname').textContent=d.name;card.querySelector('.tag').textContent=d.category||'家常菜';card.querySelector('[data-act=add]').onclick=()=>{d.count++;d.logs=d.logs||[];d.logs.push(new Date().toISOString().slice(0,10));save()};
+ card.querySelector('[data-act=detail]').onclick=()=>openDetail(d.id);grid.append(card)});
+}
+function openEditor(d=null){editing=d?.id||null;photoData=d?.photo||null;$('modalTitle').textContent=d?'编辑菜品':'添加一道菜';$('dishName').value=d?.name||'';$('dishNote').value=d?.note||'';$('dishCategory').value=d?.category||'家常菜';$('dishPhoto').value='';$('preview').src=photoData||'';$('preview').style.display=photoData?'block':'none';$('editor').showModal()}
+$('addBtn').onclick=()=>openEditor();$('cancelBtn').onclick=()=>$('editor').close();
+$('dishPhoto').onchange=async e=>{let f=e.target.files[0];if(!f)return;if(f.size>8*1024*1024){alert('照片请控制在 8MB 以内');e.target.value='';return}photoData=await compress(f);$('preview').src=photoData;$('preview').style.display='block'};
+function compress(file){return new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>{let im=new Image();im.onload=()=>{let c=document.createElement('canvas'),scale=Math.min(1,1000/Math.max(im.width,im.height));c.width=im.width*scale;c.height=im.height*scale;c.getContext('2d').drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.78))};im.onerror=reject;im.src=r.result};r.onerror=reject;r.readAsDataURL(file)})}
+$('dishForm').onsubmit=e=>{e.preventDefault();let name=$('dishName').value.trim();if(!name)return;let d=editing?dishes.find(x=>x.id===editing):null;if(d){d.name=name;d.note=$('dishNote').value.trim();d.category=$('dishCategory').value;d.photo=photoData}else{dishes.unshift({id:crypto.randomUUID(),name,note:$('dishNote').value.trim(),category:$('dishCategory').value,photo:photoData,count:0,logs:[],created:Date.now()})}save();$('editor').close()};
+function openDetail(id){selected=dishes.find(d=>d.id===id);if(!selected)return;$('detailName').textContent=selected.name;$('detailInfo').textContent=`分类：${selected.category||'家常菜'}\n累计制作 ${selected.count} 次\n${selected.note||'暂无备注'}\n制作日期：${(selected.logs||[]).join('、')||'暂无记录'}`;$('detail').showModal()}
+$('detailClose').onclick=()=>$('detail').close();$('editBtn').onclick=()=>{$('detail').close();openEditor(selected)};$('deleteBtn').onclick=()=>{if(confirm(`确定删除「${selected.name}」吗？`)){dishes=dishes.filter(d=>d.id!==selected.id);save();$('detail').close()}};
+$('search').oninput=render;document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{sort=b.dataset.sort;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x===b));render()});
+$('exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({version:1,dishes},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='我的菜品备份.json';a.click();URL.revokeObjectURL(a.href)};
+$('importBtn').onclick=()=>$('backupFile').click();$('backupFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let data=JSON.parse(await f.text()),items=Array.isArray(data)?data:data.dishes;if(!Array.isArray(items)||items.some(d=>!d||typeof d.name!=='string'))throw Error();if(confirm(`将导入 ${items.length} 道菜品，并与现有记录合并。重复记录会跳过。继续吗？`)){let ids=new Set(dishes.map(d=>d.id));let added=0;items.forEach(d=>{if(!d.id||ids.has(d.id))return;d.category=d.category||'家常菜';d.count=Number(d.count)||0;d.logs=Array.isArray(d.logs)?d.logs:[];dishes.push(d);ids.add(d.id);added++});save();alert(`导入完成，新增 ${added} 道菜品`)}}catch{alert('文件格式不正确，无法导入')}e.target.value=''};
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+load();
+</script>
+</body></html>
